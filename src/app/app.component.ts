@@ -7,6 +7,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title = 'SREE-Front';
+}
+/*
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
   title = 'P_TomaDeciciones';
   loggedUser !: string;
   
@@ -29,4 +38,4 @@ export class AppComponent {
 
   }
 
-}
+}*/
