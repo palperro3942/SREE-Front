@@ -12,6 +12,31 @@ body{
     background-color: white;
 }
 
+/*Estilo tablas*/
+.tabla {
+  max-height: 400px; /* Establece la altura máxima para mostrar solo 400px de contenido */
+  overflow-y: auto; /* Agrega scroll vertical cuando el contenido excede la altura máxima */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 2px solid black;
+  padding: 8px;
+  text-align: left;
+  /*background-color: white;*/
+  text-align: center;
+}
+
+thead {
+  background-color: gray;
+  text-align: center;
+}
+/*end tablas*/
+
 .filtro{
   box-sizing: border-box;
   position:absolute;

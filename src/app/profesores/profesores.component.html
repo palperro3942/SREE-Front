@@ -38,7 +38,26 @@
 
     </div>
     <div class="resultado">
-        <p>hola yo soy el resultado y aquí deben de salir las tablas PERO NO SALEN </p>
+      <div class="tabla">
+        <table>
+          <thead>
+            <tr>
+              <th>Nro. de Cuenta</th>
+              <th>Nombre Completo</th>
+              <th>Fecha de Nacimiento</th>
+              <th>ID de Grupo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let alumno of alumnos">
+              <td>{{ alumno.nro_cuenta }}</td>
+              <td>{{ alumno.nombre + ' ' + alumno.apellido_1 + ' ' + alumno.apellido_2 }}</td>
+              <td>{{ alumno.fecha_nac }}</td>
+              <td>{{ alumno.id_grupo }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <script src="../profesores/script.js"></script>
