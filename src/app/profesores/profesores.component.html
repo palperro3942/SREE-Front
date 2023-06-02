@@ -10,7 +10,14 @@
     <app-header></app-header>
     <div class="filtro">
         <div class="tema">
-            <a>Filtro </a>
+            <!-- Agrega los 4 dropdowns para filtrar -->
+            <select (change)="filtrarGrupos($event)">
+                <option value="todos">Todos los grupos</option>
+                <option *ngFor="let grupo of grupos" [value]="grupo.grupo">
+                  Grupo {{ grupo.grupo }}
+                </option>
+              </select>
+            <!-- Resto de los dropdowns... -->
         </div>
         
         <div class="wrapper">
@@ -42,24 +49,22 @@
         <table>
           <thead>
             <tr>
-              <th>Nro. de Cuenta</th>
-              <th>Nombre Completo</th>
-              <th>Fecha de Nacimiento</th>
-              <th>ID de Grupo</th>
+                <th>N° de Cuenta</th>
+                <th>Nombre</th>
+                <th>Grupo</th>
+                <th>Estrategia de Aprendizaje</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let alumno of alumnos">
-              <td>{{ alumno.nro_cuenta }}</td>
-              <td>{{ alumno.nombre + ' ' + alumno.apellido_1 + ' ' + alumno.apellido_2 }}</td>
-              <td>{{ alumno.fecha_nac }}</td>
-              <td>{{ alumno.id_grupo }}</td>
+            <tr *ngFor="let alumno of alumnosFiltrados">
+                <td>{{ alumno.nro_cuenta }}</td>
+                <td>{{ getNombreCompleto(alumno) }}</td>
+                <td>{{ alumno.grupo }}</td>
+                <td>{{ alumno.estrategia_aprendizaje }}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-
-    <script src="../profesores/script.js"></script>
 </body>
 </html>
