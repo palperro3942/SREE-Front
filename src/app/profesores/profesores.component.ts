@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profesores',
@@ -11,30 +12,56 @@ export class ProfesoresComponent implements OnInit {
   grupos: any[] = [];
   grupoSeleccionado: any;
   alumnosFiltrados: any[] = [];
+  profesor: any;
+  materias: string[] = ['IHC','Lenguajes de Programacion','POO','Ingenieria de Software'];
+  materiaSeleccionada: string[] = [];
+  materiasFiltradas: string[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.obtenerAlumnos();
+
+    this.route.paramMap.subscribe((params) => {
+      const profesor = params.get('profesor');
+      if (profesor) {
+        this.profesor = JSON.parse(profesor);
+        this.obtenerMaterias();
+        console.log('Profesor:', this.profesor);
+      }
+    });
+  }
+
+  obtenerMaterias(): void {
+    const url = 'http://localhost:3000/materias';
+    this.http.get<any[]>(url).subscribe(
+      (materias: any[]) => {
+        this.materiasFiltradas = materias.filter((materia) => materia.id_profesor === this.profesor.id_profesor);
+        console.log('Materias filtradas:', this.materiasFiltradas, this.profesor);
+      },
+      (error) => {
+        console.error('Error al obtener las materias:', error);
+      }
+    );
   }
 
   obtenerAlumnos(): void {
     this.obtenerGrupos();
-    // Hacer la petición HTTP para obtener los datos de los alumnos desde el backend API REST
+
     this.http.get<any[]>('http://localhost:3000/alumnos').subscribe(
       (response) => {
         this.alumnos = response;
-        // Obtener los grupos únicos de los alumnos
         const gruposUnicos = [...new Set(this.alumnos.map((alumno) => alumno.grupo))];
-        // Construir la lista de grupos con el formato requerido
         this.grupos = gruposUnicos.map((grupo) => ({ grupo }));
-        // Después de obtener los datos de los alumnos, asociar los grupos
         this.alumnos.forEach((alumno) => {
           alumno.grupo = alumno.grupo;
         });
-        console.log('Alumnos Obtenidos:', this.alumnos); // debug
-        // Filtrar los grupos después de obtener los alumnos
-        this.filtrarGrupos({ target: { value: '1' } });        
+        console.log('Alumnos Obtenidos:', this.alumnos);
+        this.filtrarGrupos({ target: { value: '1' } });
       },
       (error) => {
         console.log('Error al obtener los datos de los alumnos:', error);
@@ -51,7 +78,7 @@ export class ProfesoresComponent implements OnInit {
         console.error('Error al obtener los grupos:', error);
       }
     );
-    console.log('Grupos filtrados:', this.grupos); // debug
+    console.log('Grupos filtrados:', this.grupos);
   }
 
   filtrarGrupos(event: any): void {
@@ -61,7 +88,7 @@ export class ProfesoresComponent implements OnInit {
     } else {
       this.alumnosFiltrados = this.alumnos.filter((alumno) => String(alumno.grupo) === valor);
     }
-    console.log('Alumnos filtrados:', this.alumnosFiltrados); // debug
+    console.log('Alumnos filtrados:', this.alumnosFiltrados);
     this.grupoSeleccionado = valor;
   }
 

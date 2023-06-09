@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   // no olvidar obtenerlo del api
-  nombreMaestro: string = 'Nombre del Maestro';
+  nombreMaestro: string = 'Francisco Figueroa';
 
   constructor() { }
 

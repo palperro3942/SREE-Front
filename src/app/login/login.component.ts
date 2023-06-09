@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-//import { AlumnoService } from '../services/alumno.service';
-//import Swal from 'sweetalert2';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,68 +7,30 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent //implements OnInit //
-{
-  
+export class LoginComponent {
+  @Output() inicioSesionExitoso: EventEmitter<any> = new EventEmitter<any>();
 
-  /*activeClass: boolean;
-  login_form: FormGroup = new FormGroup({});
-  isCheck: any;
+  profesor: any;
+  nroEmpleado: string = '';
+  contra: string = '';
 
-  /*constructor( private fb: FormBuilder, private servicio: AlumnoService, private route: Router ) { 
-    this.activeClass = true;
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
-  onClick(){
-    this.activeClass = !this.activeClass
-  }
+  iniciarSesion(): void {
+    const url = 'http://localhost:3000/profesores/login';
+    const body = {
+      nro_empleado: this.nroEmpleado,
+      contra: this.contra
+    };
 
-  ngOnInit(): void {
-
-    this.login_form = this.fb.group( {
-      nro_cuenta: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
-      password: ['', [Validators.required]]
-    } );
-
-  }
-
-  sendLogin(): void {
-    
-    if( this.login_form.valid ){
-      this.servicio.loginAlumno(
-        { 
-          nro_cuenta: this.login_form.controls['nro_cuenta'].value,
-          contraseña: this.login_form.controls['password'].value
-        }
-      ).subscribe( (data) => {
-
-        localStorage.setItem('info_alumno', JSON.stringify(data));  
-        this.route.navigate(['/Inicio']);
-
+    this.http.post(url, body).subscribe(
+      (response) => {
+        this.router.navigate(['/profesores'], { state: { profesor: response } });
       },
       (error) => {
-        Swal.fire({
-          title: 'Error de inicio de sesión',
-          html: 'Error: ' + 'Datos no válidos o cuenta inexistente, intentelo de nuevo... ',
-          icon: 'error',
-          customClass: {
-            container: 'my-swal',
-          },
-        })
-      } )
-    }else {
-      Swal.fire({
-        title: 'Error de registro',
-        html: 'Por favor, llene todos los campos correctamente e inténtelo de nuevo.',
-        icon: 'error',
-        customClass: {
-          container: 'my-swal',
-        },
-      });
-    }
-
-
-
-  }/*/
-
+        // Manejar el error de inicio de sesión...
+        console.log('Error en el inicio de sesión:', error);
+      }
+    );
+  }
 }

@@ -9,19 +9,19 @@
   <body>
 
     <div class="login-box">
-      <!-- <img src="img/logo.png" class="avatar" alt="Avatar Image">-->
       <h1>Iniciar sesión</h1>
-      <form>
+      <form (submit)="iniciarSesion()">
         <!-- USERNAME INPUT -->
         <label for="username">Matricula</label>
-        <input type="text" placeholder="Ingrese su matricula">
+        <input type="text" placeholder="Ingrese su matricula" name="nroCuenta" [(ngModel)]="nroEmpleado">
         <!-- PASSWORD INPUT -->
         <label for="password">Contraseña</label>
-        <input type="password" placeholder="Ingrese su contraseña">
-        <input type="submit" value="Log In">
+        <input type="password" placeholder="Ingrese su contraseña" name="contra" [(ngModel)]="contra">
+        <button type="submit" class="">Log In</button>
         <a href="#">Olvidaste tu contraseña?</a><br>
         <a href="#">No tengo una cuenta?</a>
       </form>
     </div>
+    
   </body>
 </html>

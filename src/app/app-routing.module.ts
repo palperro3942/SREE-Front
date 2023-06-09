@@ -9,8 +9,6 @@ const appRoutes : Routes = [
 
   { path:'', component : LoginComponent},
   { path:'profesores', component: ProfesoresComponent},
-
-
  
 ]
 

@@ -4,36 +4,27 @@
     <meta charset="utf-8">
     <title>SREE</title>
     <link rel="stylesheet" href="../profesores/profesores.component.css">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0.0/css/line.css">
 </head>
 <body>
-    <app-header></app-header>
+  <app-header></app-header>
     <div class="filtro">
         <div class="tema">
-            <!-- Agrega los 4 dropdowns para filtrar -->
+          <!-- para filtrar -->
             <select (change)="filtrarGrupos($event)">
-                <option value="todos">Todos los grupos</option>
+              <option value="todos">Todos los grupos</option>
                 <option *ngFor="let grupo of grupos" [value]="grupo.grupo">
                   Grupo {{ grupo.grupo }}
                 </option>
-              </select>
-            <!-- Resto de los dropdowns... -->
-        </div>
-        
-        <div class="wrapper">
-            <div class="select-btn">
-                <span>Buscar </span>
-                <i class="uil uil-angle-down"></i>
-            </div>
-            <div class="content">
-                <div class="search">
-                  <i class="uil uil-search"></i>
-                  <input spellcheck="false" type="text" placeholder="Search">
-                </div>
-                <ul class="options"></ul>
-            </div> 
-        
-        </div>
+            </select>
+
+            <select (change)="obtenerMaterias()">
+              <option value="todas">Todas las materias</option>
+              <option *ngFor="let materia of materiasFiltradas" [value]="materia">
+                {{ materia }}
+              </option>
+            </select>
+
+        </div>  
     </div>
     <div class="descargas">
         <div class="excel">
