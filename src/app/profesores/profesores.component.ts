@@ -13,9 +13,12 @@ export class ProfesoresComponent implements OnInit {
   grupoSeleccionado: any;
   alumnosFiltrados: any[] = [];
   profesor: any;
+  carreras: string[] = ['Ing. Software','Ing. Civil', 'Ing. Geodesia'];
+  carreraSeleccionada: string | null = null;
   materias: string[] = ['IHC','Lenguajes de Programacion','POO','Ingenieria de Software'];
   materiaSeleccionada: string[] = [];
   materiasFiltradas: string[] = [];
+  datos: any;
 
   constructor(
     private http: HttpClient,
@@ -25,7 +28,7 @@ export class ProfesoresComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerAlumnos();
-
+    this.obtenerEstrategias();
     this.route.paramMap.subscribe((params) => {
       const profesor = params.get('profesor');
       if (profesor) {
@@ -34,6 +37,21 @@ export class ProfesoresComponent implements OnInit {
         console.log('Profesor:', this.profesor);
       }
     });
+  }
+
+  obtenerEstrategias(): void{
+    const id = 4; //debug reemplaza por id de alumno seleccionado
+
+    const url = `http://localhost:3000/perfil-final-inventario-de-felder/${id}`;
+    this.http.get(url).subscribe(
+      (response: any) => {
+        this.datos = response;
+        console.log(this.datos);
+      },
+      (error) => {
+        console.error('Error al obtener los datos:', error);
+      }
+    );
   }
 
   obtenerMaterias(): void {
@@ -90,6 +108,10 @@ export class ProfesoresComponent implements OnInit {
     }
     console.log('Alumnos filtrados:', this.alumnosFiltrados);
     this.grupoSeleccionado = valor;
+  }
+
+  onCarreraSelectionChange(){
+    //todo carreras
   }
 
   getNombreCompleto(alumno: any): string {

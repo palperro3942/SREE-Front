@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>SREE</title>
-    <link rel="stylesheet" href="../profesores/profesores.component.css">
-</head>
-<body>
-  <app-header></app-header>
+<app-header></app-header>
+<div class="profesores">
     <div class="filtro">
         <div class="tema">
           <!-- para filtrar -->
@@ -22,6 +15,11 @@
               <option *ngFor="let materia of materiasFiltradas" [value]="materia">
                 {{ materia }}
               </option>
+            </select>
+
+            <select [(ngModel)]="carreraSeleccionada" (change)="onCarreraSelectionChange()">
+              <option value="" disabled selected>Selecciona una carrera</option>
+              <option *ngFor="let carrera of carreras" [value]="carrera">{{ carrera }}</option>
             </select>
 
         </div>  
@@ -57,5 +55,17 @@
         </table>
       </div>
     </div>
-</body>
-</html>
+    <div class="estrategias">
+      <h4>Nombre Alumno: </h4>
+      <p class="erecomendada">Estrategias de enseñanza recomendadas:</p>
+      <input type="checkbox" id="cbox1" value="e1_checkbox"><p class="pe1">{{datos.ee1.titulo}}</p>
+      <input type="checkbox" id="cbox2" value="e2_checkbox"><p class="pe2">{{datos.ee2.titulo}}</p>
+      <input type="checkbox" id="cbox3" value="e3_checkbox"><p class="pe3">{{datos.ee3.titulo}}</p>
+      <input type="checkbox" id="cbox4" value="e4_checkbox"><p class="pe4">{{datos.ee4.titulo}}</p>
+      <p class="detallese">Detalles de las Estrategias:</p>
+      <div class="de1"><p>{{datos.ee1.descripcion}}</p></div>
+      <div class="de2"><p>{{datos.ee2.descripcion}}</p></div>
+      <div class="de3"><p>{{datos.ee3.descripcion}}</p></div>
+      <div class="de4"><p>{{datos.ee4.descripcion}}</p></div>
+  </div>
+</div>
