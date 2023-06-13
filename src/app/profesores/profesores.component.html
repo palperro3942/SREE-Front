@@ -1,6 +1,7 @@
 <app-header></app-header>
 <div class="profesores">
     <div class="filtro">
+      <h2>Filtro</h2>
         <div class="tema">
           <!-- para filtrar -->
             <select (change)="filtrarGrupos($event)">
@@ -25,6 +26,7 @@
         </div>  
     </div>
     <div class="descargas">
+      <h2>Descargar archivos</h2>
         <div class="excel">
             <img src="../../assets/images/excel.png" alt="">
         </div>
@@ -56,6 +58,8 @@
       </div>
     </div>
     <div class="estrategias">
+      <h2>Recomendaciones</h2>
+      <br>
       <h4>Nombre Alumno: </h4>
       <p class="erecomendada">Estrategias de enseñanza recomendadas:</p>
       <input type="checkbox" id="cbox1" value="e1_checkbox"><p class="pe1">{{datos.ee1.titulo}}</p>

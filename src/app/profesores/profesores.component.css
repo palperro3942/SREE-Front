@@ -32,8 +32,9 @@ th, td {
 }
 
 thead {
-  background-color: gray;
+  background-color: #1D568D;
   text-align: center;
+  border-radius: 20px;
 }
 /*end tablas*/
 
@@ -44,9 +45,18 @@ thead {
   height: 250px;
   left: 40px;
   top: 95px;
-  background: #1D568D;
+  background: #1E2440;
   border-radius: 20px;
   margin-top: 20px;
+}
+.filtro h2{
+  line-height: 39px;  
+  background-color: #1D568D;
+  color: white;
+  text-align: center;
+  font-weight: 400;
+  font-size: 30px;
+  border-radius: 20px;
 }
 .tema{
   margin-top: 20px;
@@ -160,10 +170,19 @@ thead {
   left: 815px;
   top: 137px;
 
-  background: #1D568D;
+  background: #1E2440;;
   border-radius: 20px;
   /*width: 600px;
   height: 250px;*/
+}
+.descargas h2{
+  background-color: #1D568D;
+  text-align: center;
+  color: white;
+  line-height: 39px;  
+  font-weight: 400;
+  font-size: 30px;
+  border-radius: 20px;
 }
 
 .resultado{
@@ -171,7 +190,7 @@ thead {
   width: 1250px;
   height: 400px;
   margin-top: 400px;
-  background: #1D568D;
+  background: #1E2440;
   border-radius: 20px;
   color: white;
   position: absolute;
@@ -220,6 +239,14 @@ thead {
   font-weight: 400;
   font-size: 22px;
   line-height: 39px;  
+}
+.estrategias h2{
+  line-height: 39px;  
+  background-color: #1D568D;
+  text-align: center;
+  font-weight: 400;
+  font-size: 30px;
+  border-radius: 20px;
 }
 
 .erecomendada{
