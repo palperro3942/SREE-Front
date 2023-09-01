@@ -3,25 +3,17 @@
     <div class="filtro">
         <div class="tema">
           <!-- para filtrar -->
-            <select (change)="filtrarGrupos($event)">
-              <option value="todos">Todos los grupos</option>
-                <option *ngFor="let grupo of grupos" [value]="grupo.grupo">
-                  Grupo {{ grupo.grupo }}
-                </option>
-            </select>
-
-            <select (change)="obtenerMaterias()">
-              <option value="todas">Todas las materias</option>
-              <option *ngFor="let materia of materiasFiltradas" [value]="materia">
-                {{ materia }}
-              </option>
-            </select>
-
-            <select [(ngModel)]="carreraSeleccionada" (change)="onCarreraSelectionChange()">
-              <option value="" disabled selected>Selecciona una carrera</option>
-              <option *ngFor="let carrera of carreras" [value]="carrera">{{ carrera }}</option>
-            </select>
-
+          <select (change)="onCarreraSelectionChange()">
+            <option value="todos" disabled selected>Selecciona una carrera</option>
+            <option *ngFor="let carrera of carreras" [value]="carrera">{{ carrera }}</option>
+          </select>
+          <select (change)="filtrarGrupos($event)">
+            <option value="todos">Todos los grupos</option>
+            <option *ngFor="let grupo of grupos" [value]="grupo.grupo" (click)="filtrarGrupos({ target: { value: grupo.grupo } })">
+              Grupo {{ grupo.grupo }}
+            </option>
+          </select>
+          
         </div>  
     </div>
     <div class="descargas">
@@ -31,7 +23,6 @@
         <div class="pdf">
             <img src="../../assets/images/pdf.png" alt="">
         </div>
-
     </div>
     <div class="resultado">
       <div class="tabla">
@@ -41,7 +32,7 @@
                 <th>N° de Cuenta</th>
                 <th>Nombre</th>
                 <th>Grupo</th>
-                <th>Estrategia de Aprendizaje</th>
+                <th>Estilo de Aprendizaje</th>
             </tr>
           </thead>
           <tbody>
@@ -56,16 +47,22 @@
       </div>
     </div>
     <div class="estrategias">
-      <h4>Nombre Alumno: </h4>
+      <h4>Nombre Alumno: {{ nombreAlumno }}</h4>
       <p class="erecomendada">Estrategias de enseñanza recomendadas:</p>
-      <input type="checkbox" id="cbox1" value="e1_checkbox"><p class="pe1">{{datos.ee1.titulo}}</p>
-      <input type="checkbox" id="cbox2" value="e2_checkbox"><p class="pe2">{{datos.ee2.titulo}}</p>
-      <input type="checkbox" id="cbox3" value="e3_checkbox"><p class="pe3">{{datos.ee3.titulo}}</p>
-      <input type="checkbox" id="cbox4" value="e4_checkbox"><p class="pe4">{{datos.ee4.titulo}}</p>
+      <input type="checkbox" id="cbox1" value="e1_checkbox"><p class="pe1">{{ tituloEE1 }}</p>
+      <input type="checkbox" id="cbox2" value="e2_checkbox"><p class="pe2">{{ tituloEE2 }}</p>
+      <input type="checkbox" id="cbox3" value="e3_checkbox"><p class="pe3">{{ tituloEE3 }}</p>
+      <input type="checkbox" id="cbox4" value="e4_checkbox"><p class="pe4">{{ tituloEE4 }}</p>
       <p class="detallese">Detalles de las Estrategias:</p>
-      <div class="de1"><p>{{datos.ee1.descripcion}}</p></div>
-      <div class="de2"><p>{{datos.ee2.descripcion}}</p></div>
-      <div class="de3"><p>{{datos.ee3.descripcion}}</p></div>
-      <div class="de4"><p>{{datos.ee4.descripcion}}</p></div>
+      <div class="de1"><p>{{ descripcionEE1 }}</p></div>
+      <div class="de2"><p>{{ descripcionEE2 }}</p></div>
+      <div class="de3"><p>{{ descripcionEE3 }}</p></div>
+      <div class="de4"><p>{{ descripcionEE4 }}</p></div>
+    </div>    
+
+  <div class="encuestas">
+    <a href="https://forms.gle/2YeNiWerhAL91BPg8" class="b_encuesta">Evaluar Test SUMI</a>
+    <a href="https://forms.gle/FnfSoPa8KrWxyATp7" class="b_encuesta">Evaluar Test USABILIDAD</a>
   </div>
+
 </div>

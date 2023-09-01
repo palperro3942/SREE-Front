@@ -4,7 +4,9 @@
         <p class="logo-nombre">Sistema de Recomendación de Estrategias de Enseñanza</p>
     </a>
     <nav>
-        <span>{{ nombreMaestro }}</span>
-        <a href="#" class="nav-link">Cerrar Sesión</a>
+        <div *ngIf="nombreProfesor">
+            <span>Bienvenido, {{ nombreProfesor }}</span>
+            <a href="#" class="nav-link" (click)="cerrarSesion()">Cerrar Sesión</a>
+        </div>
     </nav>
 </header>

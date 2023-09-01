@@ -44,15 +44,21 @@ thead {
   height: 250px;
   left: 40px;
   top: 95px;
-  background: #1D568D;
+  background: #1E2440;
   border-radius: 20px;
   margin-top: 20px;
 }
 .tema{
-  margin-top: 20px;
-  margin-left: 40px;
-  color: white;
-  
+  display: inline-flex;
+  height: 226px;
+  padding: 32px 52px 149px 43px;
+  align-items: flex-start;
+  gap: 63px;
+  flex-shrink: 0;
+}
+
+.tema > select {
+  width: 220px;
 }
 
 ::selection{
@@ -160,7 +166,7 @@ thead {
   left: 815px;
   top: 137px;
 
-  background: #1D568D;
+  background: #1E2440;
   border-radius: 20px;
   /*width: 600px;
   height: 250px;*/
@@ -171,7 +177,7 @@ thead {
   width: 1250px;
   height: 400px;
   margin-top: 400px;
-  background: #1D568D;
+  background: #1E2440;
   border-radius: 20px;
   color: white;
   position: absolute;
@@ -387,4 +393,38 @@ thead {
 }
 .de1 > p, .de2 > p, .de3 > p, .de4 > p {
   font-size: 16px;
+}
+
+.button{/*parece que ya no se usa*/
+  margin-left: auto; 
+  margin-right: 0;
+  margin-top: 10px;
+}
+
+.encuestas{
+  display: inline-flex;
+  position: absolute;
+  top: 850px;
+  height: 111px;
+  padding: 33px 63px 33px 43px;
+  align-items: flex-start;
+  gap: 67px;
+  flex-shrink: 0;
+}
+
+.b_encuesta{
+  right: 0;
+  background-color: #6074CC;
+  border-radius: 1rem;
+  padding: 10px;
+  border: none;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.b_encuesta:hover{
+  background-color: #1E2440;
 }

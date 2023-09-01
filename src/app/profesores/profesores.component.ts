@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-profesores',
@@ -15,62 +15,59 @@ export class ProfesoresComponent implements OnInit {
   profesor: any;
   carreras: string[] = ['Ing. Software','Ing. Civil', 'Ing. Geodesia'];
   carreraSeleccionada: string | null = null;
-  materias: string[] = ['IHC','Lenguajes de Programacion','POO','Ingenieria de Software'];
-  materiaSeleccionada: string[] = [];
-  materiasFiltradas: string[] = [];
   datos: any;
+  nombreAlumno:string = '';
+  idGrupo: any;
+  // Estrategias enseñanza
+  tituloEE1: string = '';
+  descripcionEE1: string = '';
+  tituloEE2: string = '';
+  descripcionEE2: string = '';
+  tituloEE3: string = '';
+  descripcionEE3: string = '';
+  tituloEE4: string = '';
+  descripcionEE4: string = '';
 
+  
   constructor(
     private http: HttpClient,
-    private route: ActivatedRoute,
-    private router: Router
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.obtenerAlumnos();
-    this.obtenerEstrategias();
-    this.route.paramMap.subscribe((params) => {
-      const profesor = params.get('profesor');
-      if (profesor) {
-        this.profesor = JSON.parse(profesor);
-        this.obtenerMaterias();
-        console.log('Profesor:', this.profesor);
-      }
-    });
   }
 
-  obtenerEstrategias(): void{
-    const id = 4; //debug reemplaza por id de alumno seleccionado
+  //https://apiv2.reprobados.com
+  //http://localhost:3000
+  urlprincipal = "https://apiv2.reprobados.com";  //WebProd
+  //urlprincipal = "http://localhost:3000";         //DevMode
 
-    const url = `http://localhost:3000/perfil-final-inventario-de-felder/${id}`;
+  obtenerEstrategias(idGrupo: number): void {
+    const url = this.urlprincipal + `/perfil-final-inventario-de-felder/id_grupo/${idGrupo}`;
     this.http.get(url).subscribe(
       (response: any) => {
-        this.datos = response;
-        console.log(this.datos);
+        this.datos = response[0]; // Solo toma el primer elemento del arreglo
+        this.tituloEE1 = this.datos.ee1.titulo;
+        this.descripcionEE1 = this.datos.ee1.descripcion;
+        this.tituloEE2 = this.datos.ee2.titulo;
+        this.descripcionEE2 = this.datos.ee2.descripcion;
+        this.tituloEE3 = this.datos.ee3.titulo;
+        this.descripcionEE3 = this.datos.ee3.descripcion;
+        this.tituloEE4 = this.datos.ee4.titulo;
+        this.descripcionEE4 = this.datos.ee4.descripcion;
       },
       (error) => {
         console.error('Error al obtener los datos:', error);
       }
     );
   }
-
-  obtenerMaterias(): void {
-    const url = 'http://localhost:3000/materias';
-    this.http.get<any[]>(url).subscribe(
-      (materias: any[]) => {
-        this.materiasFiltradas = materias.filter((materia) => materia.id_profesor === this.profesor.id_profesor);
-        console.log('Materias filtradas:', this.materiasFiltradas, this.profesor);
-      },
-      (error) => {
-        console.error('Error al obtener las materias:', error);
-      }
-    );
-  }
+  
 
   obtenerAlumnos(): void {
     this.obtenerGrupos();
 
-    this.http.get<any[]>('http://localhost:3000/alumnos').subscribe(
+    this.http.get<any[]>(this.urlprincipal+'/alumnos').subscribe(
       (response) => {
         this.alumnos = response;
         const gruposUnicos = [...new Set(this.alumnos.map((alumno) => alumno.grupo))];
@@ -79,7 +76,6 @@ export class ProfesoresComponent implements OnInit {
           alumno.grupo = alumno.grupo;
         });
         console.log('Alumnos Obtenidos:', this.alumnos);
-        this.filtrarGrupos({ target: { value: '1' } });
       },
       (error) => {
         console.log('Error al obtener los datos de los alumnos:', error);
@@ -88,16 +84,29 @@ export class ProfesoresComponent implements OnInit {
   }
 
   obtenerGrupos(): void {
-    this.http.get<any[]>('http://localhost:3000/grupos').subscribe(
-      (grupos: any[]) => {
-        this.grupos = grupos;
+    const idProfesor = this.authService.obtenerUsuario().id_profesor;
+    const url = this.urlprincipal+`/grupos_asignados/id_profesor/${idProfesor}`;
+    console.log("ID DEL PROFESOR: ",idProfesor)
+    this.http.get<any[]>(url).subscribe(
+      (gruposAsignados: any[]) => {
+        const idGrupos = gruposAsignados.map((grupo) => grupo.id_grupo);
+        const urlGrupos = this.urlprincipal+`/grupos/id_grupo/${idGrupos.join(',')}`;
+  
+        this.http.get<any[]>(urlGrupos).subscribe(
+          (grupos: any[]) => {
+            this.grupos = grupos;
+          },
+          (error) => {
+            console.error('Error al obtener los grupos:', error);
+          }
+        );
       },
       (error) => {
-        console.error('Error al obtener los grupos:', error);
+        console.error('Error al obtener los grupos asignados:', error);
       }
     );
-    console.log('Grupos filtrados:', this.grupos);
   }
+  
 
   filtrarGrupos(event: any): void {
     const valor = event.target.value;
@@ -105,11 +114,10 @@ export class ProfesoresComponent implements OnInit {
       this.alumnosFiltrados = [...this.alumnos];
     } else {
       this.alumnosFiltrados = this.alumnos.filter((alumno) => String(alumno.grupo) === valor);
+      this.grupoSeleccionado = valor;
+      this.obtenerEstrategias(valor); // Llamar a obtenerEstrategias() con el id del grupo seleccionado
     }
-    console.log('Alumnos filtrados:', this.alumnosFiltrados);
-    this.grupoSeleccionado = valor;
   }
-
   onCarreraSelectionChange(){
     //todo carreras
   }

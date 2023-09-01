@@ -74,9 +74,10 @@ body {
     font-size: 16px;
   }
   
-  .login-box input[type="submit"] {
+  .login-box button[type="submit"] {
     border: none;
     outline: none;
+    width: 260px;
     height: 40px;
     background: #1D568D;
     color: #fff;

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,15 +10,15 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   @Output() inicioSesionExitoso: EventEmitter<any> = new EventEmitter<any>();
-
-  profesor: any;
+  
   nroEmpleado: string = '';
   contra: string = '';
-
-  constructor(private http: HttpClient, private router: Router) {}
+  urlprincipal = "https://apiv2.reprobados.com";  //WebProd
+  //urlprincipal = "http://localhost:3000";         //DevMode
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 
   iniciarSesion(): void {
-    const url = 'http://localhost:3000/profesores/login';
+    const url = this.urlprincipal+'/profesores/login';
     const body = {
       nro_empleado: this.nroEmpleado,
       contra: this.contra
@@ -25,7 +26,8 @@ export class LoginComponent {
 
     this.http.post(url, body).subscribe(
       (response) => {
-        this.router.navigate(['/profesores'], { state: { profesor: response } });
+        this.authService.guardarUsuario(response); // Guardar el usuario en el AuthService
+        this.router.navigate(['/profesores']);
       },
       (error) => {
         // Manejar el error de inicio de sesión...
