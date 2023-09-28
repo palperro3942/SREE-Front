@@ -10,13 +10,15 @@ import { LoginComponent } from './login/login.component';
 import { ProfesoresComponent } from './profesores/profesores.component';
 import { HeaderComponent } from './header/header.component';
 import { AuthService } from './auth.service';
+import { PrincipalComponent } from './principal/principal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ProfesoresComponent,
-    HeaderComponent
+    HeaderComponent,
+    PrincipalComponent
   ],
   imports: [
     BrowserModule,
