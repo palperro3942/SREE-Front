@@ -38,7 +38,7 @@ export class PrincipalComponent implements OnInit{
     this.obtenerAlumnos();
   }  
 
-  urlprincipal = "https://apiv2.reprobados.com";  //WebProd
+  urlprincipal = "https://apiv2.powerhashing.io";  //WebProd
   
   obtenerEstrategias(idGrupo: number): void {
     const url = this.urlprincipal + `/perfil-final-inventario-de-felder/id_grupo/${idGrupo}`;
