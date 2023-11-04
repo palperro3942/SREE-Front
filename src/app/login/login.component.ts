@@ -13,7 +13,7 @@ export class LoginComponent {
   
   nroEmpleado: string = '';
   contra: string = '';
-  urlprincipal = "https://apiv2.reprobados.com";  //WebProd
+  urlprincipal = "https://apiv2.powerhashing.io";  //WebProd
   //urlprincipal = "http://localhost:3000";         //DevMode
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 

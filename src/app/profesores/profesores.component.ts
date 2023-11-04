@@ -40,7 +40,7 @@ export class ProfesoresComponent implements OnInit {
 
   //https://apiv2.reprobados.com
   //http://localhost:3000
-  urlprincipal = "https://apiv2.reprobados.com";  //WebProd
+  urlprincipal = "https://apiv2.powerhashing.io";  //WebProd
   //urlprincipal = "http://localhost:3000";         //DevMode
 
   obtenerEstrategias(idGrupo: number): void {
@@ -118,6 +118,7 @@ export class ProfesoresComponent implements OnInit {
       this.obtenerEstrategias(valor); // Llamar a obtenerEstrategias() con el id del grupo seleccionado
     }
   }
+  
   onCarreraSelectionChange(){
     //todo carreras
   }
