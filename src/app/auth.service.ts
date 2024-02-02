@@ -6,7 +6,12 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   private usuario: any; // Variable para almacenar los datos del usuario
   
-  constructor() { }
+  constructor() {
+    // Suscribirse al evento popstate para detectar la navegación hacia atrás
+    window.addEventListener('popstate', () => {
+      location.reload(); // Forzar la recarga de la página desde el servidor
+    });
+  }
 
   guardarUsuario(usuario: any): void {
     this.usuario = usuario;

@@ -39,9 +39,10 @@ export class PrincipalComponent implements OnInit{
   }  
 
   urlprincipal = "https://apiv2.powerhashing.io";  //WebProd
+  //urlprincipal = "http://localhost:3000";         //DevMode
   
   obtenerEstrategias(idGrupo: number): void {
-    const url = this.urlprincipal + `/perfil-final-inventario-de-felder/id_grupo/${idGrupo}`;
+    const url = this.urlprincipal + `/grupos/grupo/${idGrupo}`;
     this.http.get(url).subscribe(
       (response: any) => {
         this.datos = response[0]; // Solo toma el primer elemento del arreglo

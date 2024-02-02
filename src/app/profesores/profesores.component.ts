@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
 export class ProfesoresComponent implements OnInit {
   alumnos: any[] = [];
   grupos: any[] = [];
-  grupoSeleccionado: any;
+  grupoSeleccionado: number = 0;
   alumnosFiltrados: any[] = [];
   profesor: any;
   carreras: string[] = ['Ing. Software','Ing. Civil', 'Ing. Geodesia'];
@@ -27,6 +27,10 @@ export class ProfesoresComponent implements OnInit {
   descripcionEE3: string = '';
   tituloEE4: string = '';
   descripcionEE4: string = '';
+  conteoEE1: number = 0;
+  conteoEE2: number = 0;
+  conteoEE3: number = 0;
+  conteoEE4: number = 0;
 
   
   constructor(
@@ -43,11 +47,30 @@ export class ProfesoresComponent implements OnInit {
   urlprincipal = "https://apiv2.powerhashing.io";  //WebProd
   //urlprincipal = "http://localhost:3000";         //DevMode
 
-  obtenerEstrategias(idGrupo: number): void {
-    const url = this.urlprincipal + `/perfil-final-inventario-de-felder/id_grupo/${idGrupo}`;
+  obtenerConteoEstrategias(idGrupo: number): void {
+    const url = this.urlprincipal + `/grupos/grupo/conteo/${idGrupo}`;
     this.http.get(url).subscribe(
       (response: any) => {
-        this.datos = response[0]; // Solo toma el primer elemento del arreglo
+        this.datos = response; // Solo toma el primer elemento del arreglo
+        
+        console.log("datos de conteo: "+this.datos['1'])
+        // Utilizamos notación de corchetes para acceder a las propiedades
+        this.conteoEE1 = this.datos['1'];
+        this.conteoEE2 = this.datos['2'];
+        this.conteoEE3 = this.datos['3'];
+        this.conteoEE4 = this.datos['4'];
+      },
+      (error) => {
+        console.error('Error al obtener los datos:', error);
+      }
+    );
+  }
+
+  obtenerEstrategias(idGrupo: number): void {
+    const url = this.urlprincipal + `/grupos/grupo/${idGrupo}`;
+    this.http.get(url).subscribe(
+      (response: any) => {
+        this.datos = response; // Solo toma el primer elemento del arreglo
         this.tituloEE1 = this.datos.ee1.titulo;
         this.descripcionEE1 = this.datos.ee1.descripcion;
         this.tituloEE2 = this.datos.ee2.titulo;
@@ -62,7 +85,28 @@ export class ProfesoresComponent implements OnInit {
       }
     );
   }
-  
+  alumnoSeleccionado: boolean = false; //sirve para mostrar si es grupo o alumno
+  verDetalles(alumno: any): void {
+    const url = `${this.urlprincipal}/perfil-final-inventario-de-felder/alumno/${alumno.nro_cuenta}`;
+    this.http.get(url).subscribe(
+      (response: any) => {
+          const estrategias = response[0]; // Accede al primer elemento del array
+          this.tituloEE1 = estrategias.ee1.titulo;
+          this.descripcionEE1 = estrategias.ee1.descripcion;
+          this.tituloEE2 = estrategias.ee2.titulo;
+          this.descripcionEE2 = estrategias.ee2.descripcion;
+          this.tituloEE3 = estrategias.ee3.titulo;
+          this.descripcionEE3 = estrategias.ee3.descripcion;
+          this.tituloEE4 = estrategias.ee4.titulo;
+          this.descripcionEE4 = estrategias.ee4.descripcion;
+          this.alumnoSeleccionado = true;
+          this.nombreAlumno = alumno.nombre +' '+ alumno.apellido_1 +' '+ alumno.apellido_2;
+      },
+      (error) => {
+          console.error('Error al obtener los detalles:', error);
+      }
+  );
+}
 
   obtenerAlumnos(): void {
     this.obtenerGrupos();
@@ -116,6 +160,7 @@ export class ProfesoresComponent implements OnInit {
       this.alumnosFiltrados = this.alumnos.filter((alumno) => String(alumno.grupo) === valor);
       this.grupoSeleccionado = valor;
       this.obtenerEstrategias(valor); // Llamar a obtenerEstrategias() con el id del grupo seleccionado
+      this.obtenerConteoEstrategias(valor);
     }
   }
   

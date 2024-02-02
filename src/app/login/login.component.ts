@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent {
   urlprincipal = "https://apiv2.powerhashing.io";  //WebProd
   //urlprincipal = "http://localhost:3000";         //DevMode
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
-
+  
   iniciarSesion(): void {
     const url = this.urlprincipal+'/profesores/login';
     const body = {
@@ -30,8 +31,11 @@ export class LoginComponent {
         this.router.navigate(['/profesores']);
       },
       (error) => {
-        // Manejar el error de inicio de sesión...
-        console.log('Error en el inicio de sesión:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de inicio de sesión',
+          text: error.error.message,
+        });
       }
     );
   }
